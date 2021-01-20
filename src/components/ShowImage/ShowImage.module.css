@@ -29,3 +29,8 @@
     height: 300px;
   }
 }
+
+.loading {
+  align-items: center;
+  justify-content: center;
+}

@@ -4,13 +4,14 @@ import styles from './SearchImage.module.css';
 import axios from 'axios';
 import ShowImage from '../ShowImage/ShowImage';
 
+const API = process.env.REACT_APP_UNSPLASH_API;
+const KEY = process.env.REACT_APP_UNSPLASH_KEY;
 const SearchImage = () => {
-  const [image, setImage] = useState('');
-
+  const [searchTerm, setSearchTerm] = useState('');
   const [data, setData] = useState([]);
 
   const fetchImages = () => {
-    const url = `https://api.unsplash.com/search/photos?query=${image}&client_id=sRcUNU8HRl_0Ow6SyS_gOS6suXLATK-IbpuZZLBtaBU&orientation=landscape`;
+    const url = `${API}/search/photos?query=${searchTerm}&client_id=${KEY}&per_page=30&orientation=landscape`;
     axios.get(url).then((response) => {
       console.log(response);
       setData(response.data.results);
@@ -20,7 +21,7 @@ const SearchImage = () => {
   const handleChange = (event: any) => {
     const data = event.target.value;
     console.log(data);
-    setImage(event.target.value);
+    setSearchTerm(event.target.value);
   };
 
   return (
@@ -37,7 +38,7 @@ const SearchImage = () => {
                 className="inputfield"
                 size="lg"
                 type="text"
-                value={image}
+                value={searchTerm}
                 placeholder="Search Images"
                 onChange={handleChange}
               />
@@ -47,7 +48,7 @@ const SearchImage = () => {
             Search Image
           </Button>
         </div>
-        {image === '' ? null : <ShowImage imageList={data} />}
+        {searchTerm === '' ? null : <ShowImage imageList={data} />}
       </div>
     </>
   );
